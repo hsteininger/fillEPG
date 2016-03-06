@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<!-- Default Resolution -->
+		<meta name="viewport" content="width=1920, user-scalable=no">
+
+		<!-- Dont cache on TV - WONT WORK -->
+		<meta http-equiv='Cache-control' content='no-cache'/>
+
+		<!-- Load js-Files with TV-Cache-Buster  - WONT WORK -->
+		<!-- <script type='text/javascript'>
+			var script = document.createElement('script');
+			script.src = 'js/main.js?' + (new Date).getTime().toString();
+			script.type = 'text/javascript';
+			script.language = 'javascript';
+			document.body.appendChild(script);
+		</script> -->
+
+		<!-- set charset -->
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		
+		<!-- include css -->
+		<link rel='stylesheet' type='text/css' href='css/main.css'/> 
+		
+		<!-- include Common Widget API -->
+		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/Widget.js"></script>
+
+		<!-- including the JavaScript file which supports Samsung Web API -->
+		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/webapi/1.0/webapis.js"></script>
+
+		<!-- include my own js file -->
+		<script type="text/javascript" language="javascript" src="js/main.js"></script>
+		
+	</head>
+	<body>
+		<div id='content1'>
+			<h2 id='status' style="color: #00FF00;text-align: center;font-weight: bold">Initialize<h2>	
+		</div>
+	</body>
+	</html>

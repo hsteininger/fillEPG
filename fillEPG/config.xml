@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget>
+	<ThumbIcon>icon/icon_af_106.png</ThumbIcon>
+	<BigThumbIcon>icon/icon_af_115.png</BigThumbIcon>
+	<ListIcon>icon/icon_af_85.png</ListIcon>
+	<BigListIcon>icon/icon_af_95.png</BigListIcon>
+	
+	<category>information</category>
+	<autoUpdate>n</autoUpdate>
+
+	<cpname></cpname>
+	<cpauthjs></cpauthjs>
+	<login>n</login>
+
+	<ver>1.000</ver>
+	<mgrver>1.000</mgrver>
+	
+	<fullwidget>n</fullwidget>
+	<srcctl>n</srcctl>
+	<ticker>n</ticker>
+	<childlock>n</childlock>
+	<audiomute>n</audiomute>
+	<videomute>n</videomute>
+	<dcont>y</dcont>
+	<movie>n</movie>
+	<type>user</type>
+	
+	<widgetname>fillEPG</widgetname>
+	<description>fillEPG -- an application which turns all channels in favorites list to fill the EPG with information.</description>
+
+	<width>960</width>
+	<height>540</height>
+
+	<author>
+		<name>hsteininger</name>
+		<email></email>
+		<link></link>
+		<organization></organization>
+	</author>
+</widget>

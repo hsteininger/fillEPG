@@ -1,0 +1,31 @@
+body {
+    margin:0;
+    padding:0;
+    background-color:transparent;
+}
+
+
+#main {
+position:absolute;
+z-index:1;
+left:0px;
+top:0px;
+width:960px;
+height:480px;
+background-color:transparent;
+color:#99ffff;
+text-align:center;
+}
+
+#content1 {
+position:absolute;
+z-index:2;
+left:10px;
+top:300px;
+width:640px;
+height:480px;
+background-color:transparent;
+color:#99ffff;
+text-align:center;
+}
+
