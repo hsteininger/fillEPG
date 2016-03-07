@@ -15,7 +15,7 @@
 	<ver>1.000</ver>
 	<mgrver>1.000</mgrver>
 	
-	<fullwidget>n</fullwidget>
+	<fullwidget>y</fullwidget>
 	<srcctl>n</srcctl>
 	<ticker>n</ticker>
 	<childlock>n</childlock>
