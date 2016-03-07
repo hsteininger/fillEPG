@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rsp stat="ok">
+	<list>		
+		<widget id="fillEPG">
+			<title>fillEPG</title>
+			<compression size="15306" type="zip"/>
+			<description>fillEPG</description>
+			<download>http://YOUR-SERVER-NAME-OR-IP/fillEPG/fillEPG.zip</download>
+		</widget>
+	</list>
+</rsp>
