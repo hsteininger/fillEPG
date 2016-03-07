@@ -33,9 +33,8 @@ window.onload = function () {
 
 	//how much channels do we have - need further investigation
 	//look up here: http://www.samsungdforum.com/SamsungDForum/ForumView/df3455b529adf7c4?forumID=12aa9c2241f919a9
-	//var channelCount = webapis.tv.channel.getChannelList(successListCB, null, webapis.tv.channel.NAVIGATOR_MODE_FAVORITE, 0);
+	//webapis.tv.channel.getChannelList(successListCB, null, webapis.tv.channel.NAVIGATOR_MODE_FAVORITE, 0);
 	//webapis.tv.channel.getChannelList(successListCB, null, 2, 0);
-	//alert("--- ChannelCount : " + channelCount.length);
 
 	//Widget ready
 	widgetAPI.sendReadyEvent();
@@ -43,7 +42,7 @@ window.onload = function () {
 	//start to tune up
 	//tuneIt();
 
-	//better start with holdIT()
+	//better start with holdIT() to give some time to the widget
 	holdIt();
 };
 
@@ -128,6 +127,5 @@ window.onUnload = function() {
         if (myDebug) {
 		alert("--- entered onUnload ---");
 	};
-	
 };
 
