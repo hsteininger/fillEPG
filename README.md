@@ -21,13 +21,13 @@ about later models
 ## Install
 To install you need an SmartTV with **'develop'-Account** enabled.
 
-### USB or Webserver App Sync
+#### USB or Webserver App Sync
 I used Webserversync, because USB-install is deactivated in my 
 TVs firmware, so i cant help out with this.
 If you sync through webserver you will need **'widgetlist.xml'**
 in your webserver-root.
 
-### Install with JS/CSS packaged into zipfile
+#### Install with JS/CSS packaged into zipfile
 If you want packed everything in an zipfile just follow this:
 Put everything in an zipfile, index.html and config.xml
 must reside in the **root**-dir of the zipfile, not in an
@@ -36,7 +36,7 @@ Copy the zipfile to your webserver, **into the right path**,
 or change widgetlist.xml according too.
 Enter IP of your webserver on TV and start syncing.
 
-### Install with JS/CSS loaded from external server
+#### Install with JS/CSS loaded from external server
 Better way to handle things is to load js/css from an external
 webserver. This wil prevent a caching problem with Samsung TVs.
 In order to do this, uncomment in **'index.html'** the external
