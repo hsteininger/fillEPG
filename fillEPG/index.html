@@ -1,39 +1,43 @@
 <html>
 	<head>
+
+		<!-- Title -->
+		<title>fillEPG</title>
+
 		<!-- Default Resolution -->
 		<meta name="viewport" content="width=1920, user-scalable=no">
-
-		<!-- Dont cache on TV - WONT WORK -->
-		<meta http-equiv='Cache-control' content='no-cache'/>
-
-		<!-- Load js-Files with TV-Cache-Buster  - WONT WORK -->
-		<!-- <script type='text/javascript'>
-			var script = document.createElement('script');
-			script.src = 'js/main.js?' + (new Date).getTime().toString();
-			script.type = 'text/javascript';
-			script.language = 'javascript';
-			document.body.appendChild(script);
-		</script> -->
 
 		<!-- set charset -->
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		
 		<!-- include css -->
-		<link rel='stylesheet' type='text/css' href='css/main.css'/> 
-		
+		<link rel="stylesheet" type="text/css" href="css/main.css"/>
+
+		<!-- include css from ext. webserver with 'cachebuster' -->
+		<!-- <script>document.write('<link rel="stylesheet" type="text/css" href="http://YOUR:IP:ADDRESS:HERE/fillEPG/css/main.css?dev=' + Math.floor(Math.random() * 1000000) + '\"\/>')</script> -->
+	
 		<!-- include Common Widget API -->
 		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/Widget.js"></script>
+
+		<!-- include Common TVKeyValueApi -->
+		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/TVKeyValue.js"> </script>
 
 		<!-- including the JavaScript file which supports Samsung Web API -->
 		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/webapi/1.0/webapis.js"></script>
 
 		<!-- include my own js file -->
 		<script type="text/javascript" language="javascript" src="js/main.js"></script>
+
+		<!-- include js from ext. webserver with 'cachebuster' -->
+		<!-- <script>document.write('<script type="text/javascript" language="javascript" src="http://YOUR:IP:ADDRESS:HERE/fillEPG/js/main.js?dev=' + Math.floor(Math.random() * 1000000) + '\"><\/script>')</script> -->
 		
 	</head>
 	<body>
-		<div id='content1'>
-			<h2 id='status' style="color: #00FF00;text-align: center;font-weight: bold">Initialize<h2>	
+		<div id="content1">
+			<h1 id="status" style="color: #00FF00; text-align: center; font-weight: bold">Initialize<h1>	
+		</div>
+		<div id="content2">
+			<p id='myP'></p>
 		</div>
 	</body>
 	</html>
