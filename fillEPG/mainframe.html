@@ -1,0 +1,63 @@
+<html>
+	<head>
+
+		<!-- Title -->
+		<title>fillEPG iFrame</title>
+
+		<!-- Default Resolution -->
+		<!-- <meta name="viewport" content="width=1920, user-scalable=no"> -->
+
+		<!-- set charset -->
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		
+		<!-- include css -->
+		<link rel="stylesheet" type="text/css" href="css/main.css"/>
+
+		<!-- include css from ext. webserver with 'cachebuster' -->
+		<!-- <script>document.write('<link rel="stylesheet" type="text/css" href="http://YOUR:IP:ADDRESS:HERE/fillEPG/css/main.css?dev=' + (new Date).getTime().toString() + '\"\/>')</script> -->
+	
+
+		<!-- from sasmungd forum
+		<script type="text/javascript" src="$MANAGER_WIDGET/Common/OpenSrc/jquery-1.4.2.min.js"></script>
+		<script type="text/javascript" src="$MANAGER_WIDGET/Common/API/Widget.js"></script>
+		<script type="text/javascript" src="$MANAGER_WIDGET/Common/API/Plugin.js"></script>
+		<script type="text/javascript" src="$MANAGER_WIDGET/Common/API/TVKeyValue.js"></script>
+		<script type="text/javascript" src="$MANAGER_WIDGET/Common/Util/Include.js"></script>
+		<script type="text/javascript" src="$MANAGER_WIDGET/Common/Util/Language.js"></script>
+		<script type="text/javascript" src="$MANAGER_WIDGET/Common/Plugin/Define.js"></script>
+		<script type="text/javascript" src="$MANAGER_WIDGET/Common/IME/ime2.js"></script>
+		-->
+
+		<!-- include jquery -->
+		<!-- <script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/OpenSrc/jquery-1.4.2.min.js"></script> -->
+		<!-- <script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/jquery.js"></script> -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+		<!-- include Common Widget API -->
+		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/Widget.js"></script>
+
+		<!-- include Common TVKeyValueApi -->
+		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/TVKeyValue.js"> </script>
+
+		<!-- include Common Plugin Api -->
+		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/Plugin.js"> </script> 
+
+		<!-- including the JavaScript file which supports Samsung Web API -->
+		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/webapi/1.0/webapis.js"></script>
+
+		<!-- include my own js file -->
+		<script type="text/javascript" language="javascript" src="js/main.js"></script>
+
+		<!-- include js from ext. webserver with 'cachebuster' -->
+		<!-- <script>document.write('<script type="text/javascript" language="javascript" src="http://YOUR:IP:ADDRESS:HERE/fillEPG/js/main.js?dev=' + (new Date).getTime().toString() + '\"><\/script>')</script> -->
+		
+	</head>
+	<body>
+		<div id="content1">
+			<h1 id="status" style="color: #00FF00; text-align: center; font-weight: bold">Initialize<h1>	
+		</div>
+		<div id="content2">
+			<p id='myP'></p>
+		</div>
+	</body>
+	</html>

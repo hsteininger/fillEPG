@@ -1,43 +1,19 @@
 <html>
 	<head>
-
 		<!-- Title -->
-		<title>fillEPG</title>
+		<title>fillEPG Main</title>
 
 		<!-- Default Resolution -->
 		<meta name="viewport" content="width=1920, user-scalable=no">
 
 		<!-- set charset -->
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		
-		<!-- include css -->
-		<link rel="stylesheet" type="text/css" href="css/main.css"/>
-
-		<!-- include css from ext. webserver with 'cachebuster' -->
-		<!-- <script>document.write('<link rel="stylesheet" type="text/css" href="http://YOUR:IP:ADDRESS:HERE/fillEPG/css/main.css?dev=' + Math.floor(Math.random() * 1000000) + '\"\/>')</script> -->
-	
-		<!-- include Common Widget API -->
-		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/Widget.js"></script>
-
-		<!-- include Common TVKeyValueApi -->
-		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/TVKeyValue.js"> </script>
-
-		<!-- including the JavaScript file which supports Samsung Web API -->
-		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/webapi/1.0/webapis.js"></script>
-
-		<!-- include my own js file -->
-		<script type="text/javascript" language="javascript" src="js/main.js"></script>
-
-		<!-- include js from ext. webserver with 'cachebuster' -->
-		<!-- <script>document.write('<script type="text/javascript" language="javascript" src="http://YOUR:IP:ADDRESS:HERE/fillEPG/js/main.js?dev=' + Math.floor(Math.random() * 1000000) + '\"><\/script>')</script> -->
-		
 	</head>
 	<body>
-		<div id="content1">
-			<h1 id="status" style="color: #00FF00; text-align: center; font-weight: bold">Initialize<h1>	
-		</div>
-		<div id="content2">
-			<p id='myP'></p>
-		</div>
+		<!-- external iFrame -->
+		<!-- <script>document.write('<iframe id="mainframe" scrolling="no" style="border: none" height="1080" width="1920" src="http://YOUR:IP:ADDRESS:HERE/fillEPG/mainframe.html?dev=' + (new Date).getTime().toString() + '\">No iFrame-Support<\/iframe>')</script> -->
+
+		<!-- locale iFrame -->
+		<script>document.write('<iframe id="mainframe" scrolling="no" style="border: none" height="1080" width="1920" src="mainframe.html">No iFrame-Support<\/iframe>')</script>
 	</body>
 	</html>

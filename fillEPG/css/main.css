@@ -1,31 +1,62 @@
 body {
-    margin:0;
-    padding:0;
-    background-color:transparent;
+	margin:0;
+	padding:0;
+	background-color:transparent;
 }
 
+h1 {
+	color:#fff;
+	/* background-color:#232323;  Font #18b3ee */
+	background-color:transparent;
+	text-shadow:	0 0 5px #000, 
+			0 0 10px #fff, 
+			0 0 15px #000, 
+			0 0 20px #18b3ee, 
+			0 0 30px #18b3ee, 
+			0 0 40px #18b3ee, 
+			0 0 55px #18b3ee, 
+			0 0 75px #18b3ee;
+}
+
+h2 {
+  text-shadow: 0 1px 0 #ccc,
+               0 2px 0 #c9c9c9,
+               0 3px 0 #bbb,
+               0 4px 0 #b9b9b9,
+               0 5px 0 #aaa,
+               0 6px 1px rgba(0,0,0,.1),
+               0 0 5px rgba(0,0,0,.1),
+               0 1px 3px rgba(0,0,0,.3),
+               0 3px 5px rgba(0,0,0,.2),
+               0 5px 10px rgba(0,0,0,.25),
+               0 10px 10px rgba(0,0,0,.2),
+               0 20px 20px rgba(0,0,0,.15);
+}
+
+p {
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
 
 #content1 {
-position:absolute;
-z-index:1;
-left:25px;
-top:40px;
-width:900px;
-height:350px;
-background-color:transparent;
-color:#99ffff;
-text-align:center;
+	position:absolute;
+	z-index:1;
+	left:25px;
+	top:40px;
+	width:900px;
+	height:350px;
+	background-color:transparent;
+	color:#99ffff;
+	text-align:center;
 }
 
 #content2 {
-position:absolute;
-z-index:2;
-left:25px;
-top:400px;
-width:900px;
-height:80px;
-background-color:transparent;
-color:#99ffff;
-text-align:center;
+	position:absolute;
+	z-index:2;
+	left:25px;
+	top:400px;
+	width:900px;
+	height:80px;
+	background-color:transparent;
+	color:#99ffff;
+	text-align:center;
 }
-

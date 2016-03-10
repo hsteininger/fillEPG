@@ -1,18 +1,16 @@
-//Declaration
+//Interfaces
 var widgetAPI = new Common.API.Widget();
 var tvKey = new Common.API.TVKeyValue();
-var audioControlObject = webapis.audiocontrol;  
-var successCB;
-var errorCB;
-var holdIt;
-var tuneIt;
+var audioControlObject = webapis.audiocontrol;
+
+//Variables
 var savedChannelName;
-var curChannelName;
-//fixed int because getChannelList() is buggy, look below
+var myContent;
 var myCounter = 0;
-var myDebug = false;
 var waitSeconds = 5;
 var oldVolume = 2;
+var shouldRun = true;
+var myDebug = false;
 
 //main
 window.onload = function () {
@@ -22,14 +20,19 @@ window.onload = function () {
 	//get volume
 	oldVolume = audioControlObject.getVolume();
 
-	//set volume to 4
-	audioControlObject.setVolume(2);
+	//dime volume
+	audioControlObject.setVolume(3);
 
 	//mute audio
 	//audioControlObject.setMute(true);
 
-	//addEventlistener
+	//addEventlistener for keydown
 	document.addEventListener('keydown', remoteControlEvent);
+
+	//get my content pane
+	myContent = document.getElementById("status");
+	myContent.style.textAlign = "left";
+	myContent.style.color = "white";
 
 	//channelname and info
 	var startChannel = webapis.tv.channel.getCurrentChannel();
@@ -44,13 +47,15 @@ window.onload = function () {
 	widgetAPI.sendReadyEvent();
 
 	//better start with holdIT() to give some time to the widget
+	if (shouldRun) {
 	holdIt();
+	};	
 };
 
 // Event handling function.
 function remoteControlEvent(e) {
     var keyCode = event.keyCode;
-
+    
     switch (keyCode) {
         case tvKey.KEY_LEFT:
 		if (myDebug) { alert("--- LEFT ---"); };
@@ -68,6 +73,12 @@ function remoteControlEvent(e) {
             break;
         case tvKey.KEY_ENTER:
 		if (myDebug) { alert("--- ENTER ---"); };
+		if (shouldRun) {
+			shouldRun = false;
+		} else {
+			shouldRun = true;
+			tuneIt();
+		};
             break;
         case tvKey.KEY_RETURN:
 		//on return set volume back to where we started
@@ -78,7 +89,23 @@ function remoteControlEvent(e) {
 		//on exit set volume back to where we started
 		audioControlObject.setVolume(oldVolume);
 		if (myDebug) { alert("--- EXIT ---"); };
+	    break;	
+	case tvKey.KEY_VOL_UP:
+		if (myDebug) { alert("--- VOL UP ---"); };
+		audioControlObject.setVolumeUp();
 	    break;
+	case tvKey.KEY_VOL_DOWN:
+		if (myDebug) { alert("--- VOL DOWN ---"); };
+		audioControlObject.setVolumeDown();
+	    break;
+	case tvKey.KEY_INFO:
+		if (myDebug) { alert("--- INFO ---"); };
+		if ( document.getElementById("content1").style.visibility == "hidden" ) {
+			document.getElementById("content1").style.visibility = "visible"	
+		} else {
+			document.getElementById("content1").style.visibility = "hidden";
+		};
+		break;
     }
 };
 
@@ -88,6 +115,12 @@ function successListCB(channelList) {
 		alert("--- All Channels: : " + channelList.length);
 		for(chan in channelList) {
 			alert("------ Channellist: " + chan);
+				for(item in chan) {
+				alert("--------- Item: " + item);
+					for(i in item) {
+					alert("------------ I: " + i);
+				}
+			};
 		};
 	};
 };
@@ -99,12 +132,10 @@ function successCB() {
 	var curProgram = webapis.tv.channel.getCurrentProgram();
 	curChannelName = curChannel.channelName;
 
-	//search html by Id
-	var myContent = document.getElementById("status");
-	document.getElementById("status").style.textAlign = "left";
+	//$("#myP").text("Hello World");
 
 	//put info on TV
-	widgetAPI.putInnerHTML(myContent,"#: " + (myCounter +=1) + "<br>C: " + curChannelName + "<br>P: " + curProgram.title + "<br>Seconds to wait (l/r to change): " + waitSeconds);
+	widgetAPI.putInnerHTML(myContent,"#: " + (myCounter +=1) + "<br>C: " + curChannelName + "<br>P: " + curProgram.title + "<br>Seconds (l/r to change): " + waitSeconds + "<br>Volume: " + audioControlObject.getVolume() + "<br>Start/Pause with OK - Running: " + shouldRun);
 
         if (myDebug) {
 		alert("--- Channel: " + curChannelName + " --- Program: " + curProgram.title + " --- Description: " + curProgram.detailedDescription);
@@ -129,9 +160,6 @@ function successCB() {
 		//unmute audio
 		//audioControlObject.setMute(false);
 
-		//play notify sound that we are finished
-		//audioControlObject.playSound(webapis.audiocontrol.AUDIO_SOUND_TYPE_WARNING);
-		
 		//let the TV know that we are ready
 		widgetAPI.sendExitEvent();
 	};
@@ -139,17 +167,17 @@ function successCB() {
 
 //tuneUpErrorCallBack
 function errorCB(error) {
-		alert("--- " + error.name);
+		alert("--- ERROR --- : " + error.name);
 };
 
 //wait 3 seconds than jump to tuneIt()
 function holdIt() {
-        if (myDebug) { alert("--- Waiting --- :" + waitSeconds); };
+        if (myDebug) { alert("--- Waiting " + waitSeconds + " seconds ---"); };
 
 	if (waitSeconds < 1) {
 		waitSeconds = 1;
 	};
-
+	
 	setTimeout(tuneIt,waitSeconds*1000);
 };
 
@@ -157,7 +185,10 @@ function holdIt() {
 function tuneIt() {
         if (myDebug) { alert("--- try to tuneup ---"); };
 
+	if (!shouldRun) { return; };
+
 	webapis.tv.channel.tuneUp(successCB, errorCB, webapis.tv.channel.NAVIGATOR_MODE_FAVORITE, 0);
+
 	holdIt();
 };
 
