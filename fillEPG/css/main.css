@@ -40,9 +40,9 @@ p {
 #content1 {
 	position:absolute;
 	z-index:1;
-	left:25px;
-	top:40px;
-	width:900px;
+	left:15px;
+	top:50px;
+	width:930px;
 	height:350px;
 	background-color:transparent;
 	color:#99ffff;
@@ -52,9 +52,9 @@ p {
 #content2 {
 	position:absolute;
 	z-index:2;
-	left:25px;
-	top:400px;
-	width:900px;
+	left:15px;
+	top:410px;
+	width:930px;
 	height:80px;
 	background-color:transparent;
 	color:#99ffff;

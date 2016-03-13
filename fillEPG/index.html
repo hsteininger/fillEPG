@@ -1,19 +1,20 @@
+<!DOCTYPE html>
 <html>
 	<head>
 		<!-- Title -->
 		<title>fillEPG Main</title>
 
 		<!-- Default Resolution -->
-		<meta name="viewport" content="width=1920, user-scalable=no">
+		<!-- <meta name="viewport" content="width=1920, user-scalable=no"> -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<!-- set charset -->
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	</head>
 	<body>
-		<!-- external iFrame -->
-		<!-- <script>document.write('<iframe id="mainframe" scrolling="no" style="border: none" height="1080" width="1920" src="http://YOUR:IP:ADDRESS:HERE/fillEPG/mainframe.html?dev=' + (new Date).getTime().toString() + '\">No iFrame-Support<\/iframe>')</script> -->
-
-		<!-- locale iFrame -->
-		<script>document.write('<iframe id="mainframe" scrolling="no" style="border: none" height="1080" width="1920" src="mainframe.html">No iFrame-Support<\/iframe>')</script>
+		<!-- load iframe from package -->
+		<script>document.write('<iframe id="mainframe" scrolling="no" style="border: none" width="960" height="540" src="mainframe.html">No iFrame-Support<\/iframe>')</script>
+		<!-- load iframe from ext. webserver, change ip/path according -->
+		<!-- <script>document.write('<iframe id="mainframe" scrolling="no" style="border: none" width="960" height="540" src="http://YOUR:IP:ADDRESS:HERE/extJSTest/mainframe.html?dev=' + (new Date).getTime().toString() + '\">No iFrame-Support<\/iframe>')</script> -->
 	</body>
 	</html>
