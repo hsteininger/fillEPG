@@ -4,16 +4,10 @@ var widgetAPI = new Common.API.Widget();
 var tvKey = new Common.API.TVKeyValue();
 var audioControlObject = webapis.audiocontrol;
 
-var tuneIt;
-var holdIt;
-var successCB;
-var errorCB;
-var remoteControlEvent;
-
 //Variables
 var savedChannelName;
 var curChannelName;
-//var myContent;
+var myContent;
 var myCounter = 0;
 var waitSeconds = 5;
 var oldVolume;
@@ -29,20 +23,18 @@ window.onload = function () {
     oldVolume = audioControlObject.getVolume();
 
     //dime volume
-    audioControlObject.setVolume(oldVolume-2);
+    //audioControlObject.setVolume(oldVolume-2);
 
     //mute audio
     //audioControlObject.setMute(true);
 
-    //this.enableKeys();
     //addEventlistener for keydown
     top.document.documentElement.addEventListener('keydown', remoteControlEvent);
-    //document.getElementById("content1").addEventListener('keydown', remoteControlEvent);
 
     //get my content pane
-    //myContent = document.getElementById("status");
-    //myContent.style.textAlign = "left";
-    //myContent.style.color = "white";
+    myContent = document.getElementById("status");
+    myContent.style.textAlign = "left";
+    myContent.style.color = "white";
 
     //channelname and info
     var startChannel = webapis.tv.channel.getCurrentChannel();
@@ -64,12 +56,10 @@ window.onload = function () {
 
 // Event handling function.
 function remoteControlEvent(e) {
-    //var keyCode = event.keyCode;
-    var keyCode = e.keyCode;
 
-    alert("--- KeyHandling --- " + e.keyCode + " + " + keyCode);
+    if (myDebug) {alert("--- KeyHandling --- " + e.keyCode);}
 
-    switch (keyCode) {
+    switch (e.keyCode) {
         case tvKey.KEY_LEFT:
         if (myDebug) {alert("--- LEFT ---");}
         waitSeconds -=1;
@@ -94,14 +84,14 @@ function remoteControlEvent(e) {
         }
             break;
         case tvKey.KEY_RETURN:
+        if (myDebug) {alert("--- RETURN ---");}
         //on return set volume back to where we started
         audioControlObject.setVolume(oldVolume);
-        if (myDebug) {alert("--- RETURN ---");}
             break;
     case tvKey.KEY_EXIT:
+        if (myDebug) {alert("--- EXIT ---");}
         //on exit set volume back to where we started
         audioControlObject.setVolume(oldVolume);
-        if (myDebug) {alert("--- EXIT ---");}
         break;
     case tvKey.KEY_VOL_UP:
         if (myDebug) {alert("--- VOL UP ---");}
@@ -146,12 +136,6 @@ function successCB() {
     curChannelName = curChannel.channelName;
 
     //$("#myP").text("Hello World");
-
-    //get my content pane
-    var myContent = document.getElementById("status");
-    myContent.style.textAlign = "left";
-    myContent.style.color = "white";
-
 
     //put info on TV
     widgetAPI.putInnerHTML(myContent,"#: " + (myCounter +=1) + "<br>C: " + curChannelName + "<br>P: " + curProgram.title + "<br>Seconds (l/r): " + waitSeconds + "<br>Volume: " + audioControlObject.getVolume() + "<br>Running: " + shouldRun);
@@ -202,13 +186,3 @@ function tuneIt() {
 
     holdIt();
 };
-
-////onbeforeunload
-//window.onbeforeunload = function() {
-//        if (myDebug) { alert("--- entered onbeforeunload ---"); }
-//}
-
-////onunload
-//window.onunload = function() {
-//        if (myDebug) { alert("--- entered onunload ---"); }
-//}
