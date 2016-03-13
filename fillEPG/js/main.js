@@ -36,7 +36,7 @@ window.onload = function () {
 
     //this.enableKeys();
     //addEventlistener for keydown
-    document.addEventListener('keydown', remoteControlEvent);
+    top.document.documentElement.addEventListener('keydown', remoteControlEvent);
     //document.getElementById("content1").addEventListener('keydown', remoteControlEvent);
 
     //get my content pane
@@ -64,7 +64,8 @@ window.onload = function () {
 
 // Event handling function.
 function remoteControlEvent(e) {
-    var keyCode = event.keyCode;
+    //var keyCode = event.keyCode;
+    var keyCode = e.keyCode;
 
     alert("--- KeyHandling --- " + e.keyCode + " + " + keyCode);
 
