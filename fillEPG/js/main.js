@@ -21,7 +21,7 @@ var curProgramTitle;
 var savedChannelName;
 
 var myCounter = 0;
-var waitSeconds = 4;
+var waitSeconds = 5;
 var oldVolume = 0;
 
 var isMuted = false;
@@ -57,7 +57,7 @@ window.onload = function () {
     myPanel.style.textAlign = "left";
     myPanel.style.visibility = "hidden";
 
-    //channelname and info
+    //channelname from where we started
     var startChannel = webapis.tv.channel.getCurrentChannel();
     savedChannelName = startChannel.channelName;
 
@@ -183,13 +183,6 @@ function updateInfo() {
     curChannelName = curChannel.channelName;
     curProgramTitle = curProgram.title;
 
-    //only update status if visible,  not working, at this point the element is hidden
-    if (mainFrameBodyContent1.style.visibility == "visible") {
-       alert("--- 1. Content1 Visible ---");
-    } else {
-       alert("--- 1. Content1 hidden ---");
-    }
-
     widgetAPI.putInnerHTML(myStatus,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + "<br>Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + "<br>Running (OK): " + shouldRun + "<br>Debug (u): " + myDebug);
 
     //only update panel if visible, until i found something better it is just a clone view of myStatus, maybe output debug later
@@ -217,7 +210,7 @@ function successCB() {
         //set volume back to where we started
         if (!isMuted) {audioControlObject.setVolume(oldVolume);}
 
-        //let the TV know that we are ready
+        //let the TV know that we are exiting
         widgetAPI.sendExitEvent();
     }
 }
