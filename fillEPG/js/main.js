@@ -1,16 +1,28 @@
 "use strict";
+
 //Interfaces
 var widgetAPI = new Common.API.Widget();
 var tvKey = new Common.API.TVKeyValue();
 var audioControlObject = webapis.audiocontrol;
 
+//UI
+var mainFrame;
+var mainFrameBody;
+var mainFrameBodyContent1;
+var mainFrameBodyContent2;
+var myContent;
+var myPanel;
+
 //Variables
 var savedChannelName;
 var curChannelName;
-var myContent;
+var curProgramTitle;
+
 var myCounter = 0;
-var waitSeconds = 5;
-var oldVolume;
+var waitSeconds = 4;
+var oldVolume = 0;
+
+var isMuted = false;
 var shouldRun = true;
 var myDebug = false;
 
@@ -19,22 +31,23 @@ window.onload = function () {
 
     if (myDebug) {alert("--- entered onload ---");}
 
-    //get volume
+    //get volume and mute state
     oldVolume = audioControlObject.getVolume();
+    isMuted = audioControlObject.getMute();
 
     //dime volume
-    //audioControlObject.setVolume(oldVolume-2);
-
-    //mute audio
-    //audioControlObject.setMute(true);
+    if (oldVolume > 5 && !isMuted) {
+       audioControlObject.setVolume(oldVolume-2);
+    }
 
     //addEventlistener for keydown
     top.document.documentElement.addEventListener('keydown', remoteControlEvent);
 
-    //get my content pane
+    //get my content and panel
     myContent = document.getElementById("status");
     myContent.style.textAlign = "left";
     myContent.style.color = "white";
+    myPanel = document.getElementById("myP");
 
     //channelname and info
     var startChannel = webapis.tv.channel.getCurrentChannel();
@@ -60,21 +73,21 @@ function remoteControlEvent(e) {
     if (myDebug) {alert("--- KeyHandling --- " + e.keyCode);}
 
     switch (e.keyCode) {
-        case tvKey.KEY_LEFT:
+      case tvKey.KEY_LEFT:
         if (myDebug) {alert("--- LEFT ---");}
         waitSeconds -=1;
             break;
-        case tvKey.KEY_RIGHT:
+      case tvKey.KEY_RIGHT:
         if (myDebug) {alert("--- RIGHT ---");}
         waitSeconds +=1;
             break;
-        case tvKey.KEY_UP:
+      case tvKey.KEY_UP:
         if (myDebug) {alert("--- UP ---");}
             break;
-        case tvKey.KEY_DOWN:
+      case tvKey.KEY_DOWN:
         if (myDebug) {alert("--- DOWN ---");}
             break;
-        case tvKey.KEY_ENTER:
+      case tvKey.KEY_ENTER:
         if (myDebug) {alert("--- ENTER ---");}
         if (shouldRun) {
             shouldRun = false;
@@ -83,25 +96,25 @@ function remoteControlEvent(e) {
             tuneIt();
         }
             break;
-        case tvKey.KEY_RETURN:
-        if (myDebug) {alert("--- RETURN ---");}
+      case tvKey.KEY_RETURN:
+        //if (myDebug) {alert("--- RETURN ---");}
         //on return set volume back to where we started
-        audioControlObject.setVolume(oldVolume);
-            break;
-    case tvKey.KEY_EXIT:
-        if (myDebug) {alert("--- EXIT ---");}
+        //audioControlObject.setVolume(oldVolume);
+        //    break;
+      case tvKey.KEY_EXIT:
+        if (myDebug) {alert("--- RETURN & EXIT ---");}
         //on exit set volume back to where we started
-        audioControlObject.setVolume(oldVolume);
+        if (!isMuted) {audioControlObject.setVolume(oldVolume);}
         break;
-    case tvKey.KEY_VOL_UP:
+      case tvKey.KEY_VOL_UP:
         if (myDebug) {alert("--- VOL UP ---");}
         audioControlObject.setVolumeUp();
         break;
-    case tvKey.KEY_VOL_DOWN:
+      case tvKey.KEY_VOL_DOWN:
         if (myDebug) {alert("--- VOL DOWN ---");}
         audioControlObject.setVolumeDown();
         break;
-    case tvKey.KEY_INFO:
+      case tvKey.KEY_INFO:
         if (myDebug) {alert("--- INFO ---");}
         if (document.getElementById("content1").style.visibility == "hidden") {
             document.getElementById("content1").style.visibility = "visible";
@@ -110,6 +123,7 @@ function remoteControlEvent(e) {
         }
         break;
     }
+    updateInfo();
 };
 
 ////channelListSuccessCallBack
@@ -128,20 +142,30 @@ function remoteControlEvent(e) {
 //  };
 //};
 
+//update info pane
+function updateInfo() {
+    if (myDebug) {alert("--- Update Info ---");}
+    //put info on TV
+    widgetAPI.putInnerHTML(myContent,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + "<br>Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + "<br>Running (OK): " + shouldRun);
+    //widgetAPI.putInnerHTML(myPanel,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + "<br>Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + "<br>Running (OK): " + shouldRun);
+}
+
 //tuneUpSuccessCallBack
 function successCB() {
     //channelName and running program info
     var curChannel = webapis.tv.channel.getCurrentChannel();
     var curProgram = webapis.tv.channel.getCurrentProgram();
     curChannelName = curChannel.channelName;
+    curProgramTitle = curProgram.title;
+
+    myCounter +=1;
+
+    updateInfo();
 
     //$("#myP").text("Hello World");
 
-    //put info on TV
-    widgetAPI.putInnerHTML(myContent,"#: " + (myCounter +=1) + "<br>C: " + curChannelName + "<br>P: " + curProgram.title + "<br>Seconds (l/r): " + waitSeconds + "<br>Volume: " + audioControlObject.getVolume() + "<br>Running: " + shouldRun);
-
-        if (myDebug) {
-        alert("--- Channel: " + curChannelName + " --- Program: " + curProgram.title + " --- Description: " + curProgram.detailedDescription);
+    if (myDebug) {
+        alert("--- Channel: " + curChannelName + " --- Program: " + curProgramTitle + " --- Description: " + curProgram.detailedDescription);
     }
 
     //test if current channel is the channel we started, if so quit widget
@@ -150,10 +174,7 @@ function successCB() {
         alert("--- Starting Channel Reached ---");
 
         //set volume back to where we started
-        audioControlObject.setVolume(oldVolume);
-
-        //unmute audio
-        //audioControlObject.setMute(false);
+        if (!isMuted) {audioControlObject.setVolume(oldVolume);}
 
         //let the TV know that we are ready
         widgetAPI.sendExitEvent();
@@ -162,12 +183,12 @@ function successCB() {
 
 //tuneUpErrorCallBack
 function errorCB(error) {
-        alert("--- ERROR --- : " + error.name);
+    alert("--- ERROR --- : " + error.name);
 };
 
 //wait X seconds than jump to tuneIt()
 function holdIt() {
-        if (myDebug) {alert("--- Waiting " + waitSeconds + " seconds ---");}
+    if (myDebug) {alert("--- Waiting " + waitSeconds + " seconds ---");}
 
     if (waitSeconds < 1) {
         waitSeconds = 1;
@@ -178,7 +199,7 @@ function holdIt() {
 
 //switch the channel up by one,after that jump to holdIt()
 function tuneIt() {
-        if (myDebug) {alert("--- try to tuneup ---");}
+    if (myDebug) {alert("--- try to tuneup ---");}
 
     if (!shouldRun) { return; }
 
