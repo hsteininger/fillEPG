@@ -14,9 +14,11 @@ var myStatus;
 var myPanel;
 
 //Variables
-var savedChannelName;
+var curChannel;
 var curChannelName;
+var curProgram;
 var curProgramTitle;
+var savedChannelName;
 
 var myCounter = 0;
 var waitSeconds = 4;
@@ -43,11 +45,17 @@ window.onload = function () {
     //addEventlistener for keydown
     top.document.documentElement.addEventListener('keydown', remoteControlEvent);
 
-    //get my content and panel
+    //get all my elements by id
+    mainFrame = parent.document.getElementById("mainframe");
+    mainFrameBody = document.getElementById("mainbody");
+    mainFrameBodyContent1 = document.getElementById("content1");
+    mainFrameBodyContent2 = document.getElementById("content2");
     myStatus = document.getElementById("status");
     myStatus.style.textAlign = "left";
     myStatus.style.color = "white";
     myPanel = document.getElementById("myP");
+    myPanel.style.textAlign = "left";
+    myPanel.style.visibility = "hidden";
 
     //channelname and info
     var startChannel = webapis.tv.channel.getCurrentChannel();
@@ -60,6 +68,9 @@ window.onload = function () {
 
     //Widget ready
     widgetAPI.sendReadyEvent();
+
+    //Update myStatus
+    updateInfo();
 
     //better start with holdIT() to give some time to the widget
     if (shouldRun) {
@@ -83,9 +94,21 @@ function remoteControlEvent(e) {
             break;
       case tvKey.KEY_UP:
         if (myDebug) {alert("--- UP ---");}
+        if (!myDebug) {
+           alert("--- Turn Debug On ---");
+           myDebug = true;
+        } else {
+           alert("--- Turn Debug Off ---");
+           myDebug = false;
+        }
             break;
       case tvKey.KEY_DOWN:
         if (myDebug) {alert("--- DOWN ---");}
+        if (myPanel.style.visibility == "hidden") {
+            myPanel.style.visibility = "visible";
+        } else {
+            myPanel.style.visibility = "hidden";
+        }
             break;
       case tvKey.KEY_ENTER:
         if (myDebug) {alert("--- ENTER ---");}
@@ -114,17 +137,27 @@ function remoteControlEvent(e) {
         if (myDebug) {alert("--- VOL DOWN ---");}
         audioControlObject.setVolumeDown();
         break;
+      case tvKey.KEY_MUTE:
+        if (myDebug) {alert("--- MUTE ---");}
+        if (!isMuted) {
+           audioControlObject.setMute(true);
+           isMuted = true; 
+        } else {
+           audioControlObject.setMute(false); 
+           isMuted= false;
+        }
+        break;
       case tvKey.KEY_INFO:
         if (myDebug) {alert("--- INFO ---");}
-        if (document.getElementById("content1").style.visibility == "hidden") {
-            document.getElementById("content1").style.visibility = "visible";
+        if (mainFrameBodyContent1.style.visibility == "hidden") {
+            mainFrameBodyContent1.style.visibility = "visible";
         } else {
-            document.getElementById("content1").style.visibility = "hidden";
+            mainFrameBodyContent1.style.visibility = "hidden";
         }
         break;
     }
     updateInfo();
-};
+}
 
 ////channelListSuccessCallBack
 //function successListCB(channelList) {
@@ -145,24 +178,32 @@ function remoteControlEvent(e) {
 //update info pane
 function updateInfo() {
     if (myDebug) {alert("--- Update Info ---");}
-    //put info on TV
-    widgetAPI.putInnerHTML(myStatus,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + "<br>Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + "<br>Running (OK): " + shouldRun);
-    //widgetAPI.putInnerHTML(myPanel,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + "<br>Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + "<br>Running (OK): " + shouldRun);
+    curChannel = webapis.tv.channel.getCurrentChannel();
+    curProgram = webapis.tv.channel.getCurrentProgram();
+    curChannelName = curChannel.channelName;
+    curProgramTitle = curProgram.title;
+
+    //only update status if visible,  not working, at this point the element is hidden
+    if (mainFrameBodyContent1.style.visibility == "visible") {
+       alert("--- 1. Content1 Visible ---");
+    } else {
+       alert("--- 1. Content1 hidden ---");
+    }
+
+    widgetAPI.putInnerHTML(myStatus,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + "<br>Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + "<br>Running (OK): " + shouldRun + "<br>Debug (u): " + myDebug);
+
+    //only update panel if visible, until i found something better it is just a clone view of myStatus, maybe output debug later
+    if (myPanel.style.visibility == "visible") {
+       widgetAPI.putInnerHTML(myPanel,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + " --- Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + " --- Running (OK): " + shouldRun + " --- Debug: " + myDebug);
+    }
 }
 
 //tuneUpSuccessCallBack
 function successCB() {
-    //channelName and running program info
-    var curChannel = webapis.tv.channel.getCurrentChannel();
-    var curProgram = webapis.tv.channel.getCurrentProgram();
-    curChannelName = curChannel.channelName;
-    curProgramTitle = curProgram.title;
 
     myCounter +=1;
 
     updateInfo();
-
-    //$("#myP").text("Hello World");
 
     if (myDebug) {
         alert("--- Channel: " + curChannelName + " --- Program: " + curProgramTitle + " --- Description: " + curProgram.detailedDescription);
@@ -179,12 +220,12 @@ function successCB() {
         //let the TV know that we are ready
         widgetAPI.sendExitEvent();
     }
-};
+}
 
 //tuneUpErrorCallBack
 function errorCB(error) {
     alert("--- ERROR --- : " + error.name);
-};
+}
 
 //wait X seconds than jump to tuneIt()
 function holdIt() {
@@ -195,15 +236,15 @@ function holdIt() {
     }
 
     setTimeout(tuneIt,waitSeconds*1000);
-};
+}
 
 //switch the channel up by one,after that jump to holdIt()
 function tuneIt() {
-    if (myDebug) {alert("--- try to tuneup ---");}
+    if (myDebug) {alert("--- TuneIt ---");}
 
-    if (!shouldRun) { return; }
+    if (!shouldRun) {return;}
 
     webapis.tv.channel.tuneUp(successCB, errorCB, webapis.tv.channel.NAVIGATOR_MODE_FAVORITE, 0);
 
     holdIt();
-};
+}
