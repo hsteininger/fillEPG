@@ -19,7 +19,13 @@ To **Control** the Widget you can use the following Keys on your Remote.
 
 **Left/Right** to lower/raise seconds to wait. Can't go under 1 Second.
 
+**UP** Enable/Disable Debug Output -- see Debug below
+
+**Down** Hide/Unhide Lower Panel
+
 **Volume Up/Down** to change the Volume.
+
+**Mute** Mute/Unmute Volume
 
 **OK/Enter** to pause/resume channel switching
 
@@ -65,6 +71,3 @@ or use Google Chrome Remote Web Inspector
 
 ## ToDo
 'getChannelList()' doesnt seem to work, needs mor investigation.
-
-display of running state doesn't change when switching is paused, needs rework
-of info screen update function.
