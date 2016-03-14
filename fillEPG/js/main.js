@@ -10,7 +10,7 @@ var mainFrame;
 var mainFrameBody;
 var mainFrameBodyContent1;
 var mainFrameBodyContent2;
-var myContent;
+var myStatus;
 var myPanel;
 
 //Variables
@@ -44,9 +44,9 @@ window.onload = function () {
     top.document.documentElement.addEventListener('keydown', remoteControlEvent);
 
     //get my content and panel
-    myContent = document.getElementById("status");
-    myContent.style.textAlign = "left";
-    myContent.style.color = "white";
+    myStatus = document.getElementById("status");
+    myStatus.style.textAlign = "left";
+    myStatus.style.color = "white";
     myPanel = document.getElementById("myP");
 
     //channelname and info
@@ -146,7 +146,7 @@ function remoteControlEvent(e) {
 function updateInfo() {
     if (myDebug) {alert("--- Update Info ---");}
     //put info on TV
-    widgetAPI.putInnerHTML(myContent,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + "<br>Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + "<br>Running (OK): " + shouldRun);
+    widgetAPI.putInnerHTML(myStatus,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + "<br>Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + "<br>Running (OK): " + shouldRun);
     //widgetAPI.putInnerHTML(myPanel,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + "<br>Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + "<br>Running (OK): " + shouldRun);
 }
 
