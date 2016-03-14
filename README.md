@@ -9,14 +9,22 @@ exit.
 After that your EGP should be filled with information about 
 running programs.
 
-While the app is running you can change the waiting time for
-an channel switch, by pressing **Left** or **Right** on your 
-**Remote**, default is **5** seconds, you cant go below
-**one(1)** second.
-
 Only tested on **UE55H6770** with Firmware T-GFSDEUC-1300.2,BT-S/G,
 but should work with any Samsung TV up to 2014 models, not sure 
 about later models
+
+
+## Remote Control Keys
+To **Control** the Widget you can use the following Keys on your Remote.
+
+**Left/Right** to lower/raise seconds to wait. Can't go under 1 Second.
+
+**Volume Up/Down** to change the Volume.
+
+**OK/Enter** to pause/resume channel switching
+
+**Info** to hide/unhide info screen
+
 
 ## Install
 To install you need an SmartTV with **'develop'-Account** enabled.
@@ -57,3 +65,6 @@ or use Google Chrome Remote Web Inspector
 
 ## ToDo
 'getChannelList()' doesnt seem to work, needs mor investigation.
+
+display of running state doesn't change when switching is paused, needs rework
+of info screen update function.
