@@ -10,8 +10,16 @@ var mainFrame;
 var mainFrameBody;
 var mainFrameBodyContent1;
 var mainFrameBodyContent2;
+var mainFrameBodyContent3;
 var myStatus;
 var myPanel;
+var myswitchBackPanel;
+var myCanvas;
+
+//Colors
+var myColors = ['white', 'aqua', 'black', 'blue', 'fuchsia', 'gray', 'green', 'lime', 'maroon', 'navy', 'olive', 'orange', 'purple', 'red', 'silver', 'teal', 'yellow'];
+var colorCount = 0;
+var randColor;
 
 //Variables
 var curChannel;
@@ -19,10 +27,19 @@ var curChannelName;
 var curProgram;
 var curProgramTitle;
 var savedChannelName;
+var startChannel;
+
+var setTimeoutHandle;
+var updateInfoInterval;
 
 var myCounter = 0;
 var waitSeconds = 5;
 var oldVolume = 0;
+
+//390 Seconds, 420 seems a little bit too much
+var def_Timeout = 390;
+//var def_Timeout = 15;
+var myTimeout = def_Timeout;
 
 var isMuted = false;
 var shouldRun = true;
@@ -32,6 +49,21 @@ var myDebug = false;
 window.onload = function () {
 
     if (myDebug) {alert("--- entered onload ---");}
+
+    //check for WebAudioAPI
+    var contextClass = (window.AudioContext ||
+       window.webkitAudioContext ||
+       window.mozAudioContext ||
+       window.oAudioContext ||
+       window.msAudioContext);
+     if (contextClass) {
+       // Web Audio API is available.
+       //var audioContext = new contextClass();
+       if (myDebug) {alert("--- WebAudioAPI availabale ---");}
+      } else {
+       // Web Audio API is not available. Ask the user to use a supported browser.
+       if (myDebug) {alert("--- WebAudioAPI not available ---");}
+      }
 
     //get volume and mute state
     oldVolume = audioControlObject.getVolume();
@@ -50,16 +82,21 @@ window.onload = function () {
     mainFrameBody = document.getElementById("mainbody");
     mainFrameBodyContent1 = document.getElementById("content1");
     mainFrameBodyContent2 = document.getElementById("content2");
+    mainFrameBodyContent3 = document.getElementById("content3");
     myStatus = document.getElementById("status");
     myStatus.style.textAlign = "left";
-    myStatus.style.color = "white";
+    //myStatus.style.color = "white";
+    myStatus.style.color = myColors[colorCount];
     myPanel = document.getElementById("myP");
     myPanel.style.textAlign = "left";
     myPanel.style.visibility = "hidden";
+    myswitchBackPanel = document.getElementById("myswitchBackPanel");
+    myCanvas = document.getElementById("myCanvas");
 
     //channelname from where we started
-    var startChannel = webapis.tv.channel.getCurrentChannel();
+    startChannel = webapis.tv.channel.getCurrentChannel();
     savedChannelName = startChannel.channelName;
+    if (myDebug) {alert("--- startChannel --- : " + startChannel.major + " - " + startChannel.minor);}
 
     //how much channels do we have - need further investigation
     //look up here: http://www.samsungdforum.com/SamsungDForum/ForumView/df3455b529adf7c4?forumID=12aa9c2241f919a9
@@ -70,6 +107,7 @@ window.onload = function () {
     widgetAPI.sendReadyEvent();
 
     //Update myStatus
+    //updateInfoInterval = setInterval(updateInfo,1000);
     updateInfo();
 
     //better start with holdIT() to give some time to the widget
@@ -86,11 +124,11 @@ function remoteControlEvent(e) {
     switch (e.keyCode) {
       case tvKey.KEY_LEFT:
         if (myDebug) {alert("--- LEFT ---");}
-        waitSeconds -=1;
+        waitSeconds --;
             break;
       case tvKey.KEY_RIGHT:
         if (myDebug) {alert("--- RIGHT ---");}
-        waitSeconds +=1;
+        waitSeconds ++;
             break;
       case tvKey.KEY_UP:
         if (myDebug) {alert("--- UP ---");}
@@ -119,6 +157,18 @@ function remoteControlEvent(e) {
             tuneIt();
         }
             break;
+      case tvKey.KEY_PANEL_CH_UP:
+      case tvKey.KEY_CH_UP:
+      case tvKey.KEY_WHEELUP:
+        if (myDebug) {alert("--- CHANNEL UP ---");}
+        webapis.tv.channel.tuneUp(function(){if (myDebug){alert("--- CHANNEL TUNED UP ---");}}, errorCB, webapis.tv.channel.NAVIGATOR_MODE_FAVORITE, 0);
+        break;
+      case tvKey.KEY_PANEL_CH_DOWN:
+      case tvKey.KEY_CH_DOWN:
+      case tvKey.KEY_WHEELDOWN:
+        if (myDebug) {alert("--- CHANNEL DOWN ---");}
+        webapis.tv.channel.tuneDown(function(){if (myDebug){alert("--- CHANNEL TUNED DOWN ---");}}, errorCB, webapis.tv.channel.NAVIGATOR_MODE_FAVORITE, 0);
+        break;
       case tvKey.KEY_RETURN:
         //if (myDebug) {alert("--- RETURN ---");}
         //on return set volume back to where we started
@@ -132,10 +182,12 @@ function remoteControlEvent(e) {
       case tvKey.KEY_VOL_UP:
         if (myDebug) {alert("--- VOL UP ---");}
         audioControlObject.setVolumeUp();
+        oldVolume = audioControlObject.getVolume();
         break;
       case tvKey.KEY_VOL_DOWN:
         if (myDebug) {alert("--- VOL DOWN ---");}
         audioControlObject.setVolumeDown();
+        oldVolume = audioControlObject.getVolume();
         break;
       case tvKey.KEY_MUTE:
         if (myDebug) {alert("--- MUTE ---");}
@@ -155,6 +207,41 @@ function remoteControlEvent(e) {
             mainFrameBodyContent1.style.visibility = "hidden";
         }
         break;
+      case tvKey.KEY_RED:
+        if (myDebug) {alert("--- RED ---");}
+	if (colorCount<myColors.length) {
+           colorCount++;
+        } else {
+           colorCount = 0;
+        }
+        myStatus.style.color = myColors[colorCount];
+        break;
+      case tvKey.KEY_GREEN:
+        if (myDebug) {alert("--- GREEN ---");}
+        if (myDebug) {alert("--- Switchback entered");}
+        shouldRun = false;
+        mainFrameBodyContent1.style.visibility = "hidden";
+        mainFrameBodyContent3.style.visibility = "visible";
+        mainFrameBodyContent3.style.backgroundColor = "red";
+        mainFrameBodyContent3.style.color = "white";
+        widgetAPI.putInnerHTML(mainFrameBodyContent3,myTimeout);
+        updateInfoInterval = setInterval(updateSwitchBackPanel,1000);
+	setTimeoutHandle = setTimeout(switchBack,myTimeout*1000);
+        break;
+      case tvKey.KEY_YELLOW:
+        if (myDebug) {alert("--- YELLOW ---");}
+
+        break;
+      case tvKey.KEY_BLUE:
+        if (myDebug) {alert("--- BLUE ---");}
+        randColor = randomColors();
+        myStatus.style.color = randColor;
+        if (myDebug) {alert("--- randColor: "+ randColor + " ---");}
+        break;
+//      case tvKey.KEY_####:
+//        if (myDebug) {alert("--- ####### CHANGE ME ######## ---");}
+//
+//        break;
     }
     updateInfo();
 }
@@ -175,6 +262,20 @@ function remoteControlEvent(e) {
 //  };
 //};
 
+//switchBack function
+function switchBack() {
+    if (myDebug) {alert("--- switchBack Function ---");}
+    try {
+         webapis.tv.channel.tune(startChannel,successCB,errorCB);
+    } catch(e){
+         if (myDebug) {alert("--- switchBack-Error : "+ e.code + " - " + e.type + " - " + e.message + " ---");}
+    }
+    mainFrameBodyContent1.style.visibility = "visible";
+    mainFrameBodyContent3.style.visibility = "hidden";
+    clearInterval(updateInfoInterval);
+    myTimeout=def_Timeout;
+}
+
 //update info pane
 function updateInfo() {
     if (myDebug) {alert("--- Update Info ---");}
@@ -183,18 +284,24 @@ function updateInfo() {
     curChannelName = curChannel.channelName;
     curProgramTitle = curProgram.title;
 
-    widgetAPI.putInnerHTML(myStatus,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + "<br>Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + "<br>Running (OK): " + shouldRun + "<br>Debug (u): " + myDebug);
+    widgetAPI.putInnerHTML(myStatus,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + "<br>Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + "<br>Running (OK): " + shouldRun + "<br>Debug (u): " + myDebug + " --- Color: " + randColor);
 
     //only update panel if visible, until i found something better it is just a clone view of myStatus, maybe output debug later
     if (myPanel.style.visibility == "visible") {
-       widgetAPI.putInnerHTML(myPanel,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + " --- Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + " --- Running (OK): " + shouldRun + " --- Debug: " + myDebug);
+       widgetAPI.putInnerHTML(myPanel,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + " --- Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + " --- Running (OK): " + shouldRun + " --- Debug: " + myDebug + " --- Color: " + randColor);
     }
+}
+
+//update switchback panel
+function updateSwitchBackPanel() {
+    if (myDebug) {alert("--- UPDATESWITCHBACKCHANNEL ---");}
+        widgetAPI.putInnerHTML(mainFrameBodyContent3,myTimeout--);
 }
 
 //tuneUpSuccessCallBack
 function successCB() {
 
-    myCounter +=1;
+    myCounter++;
 
     updateInfo();
 
@@ -240,4 +347,10 @@ function tuneIt() {
     webapis.tv.channel.tuneUp(successCB, errorCB, webapis.tv.channel.NAVIGATOR_MODE_FAVORITE, 0);
 
     holdIt();
+}
+
+// random colors - taken from here:
+// http://www.paulirish.com/2009/random-hex-color-code-snippets/
+function randomColors() {
+  return '#' + Math.floor(Math.random() * 16777215).toString(16);
 }
