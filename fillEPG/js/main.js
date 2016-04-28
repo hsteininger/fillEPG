@@ -207,8 +207,8 @@ function remoteControlEvent(e) {
             mainFrameBodyContent1.style.visibility = "hidden";
         }
         break;
-      case tvKey.KEY_RED:
-        if (myDebug) {alert("--- RED ---");}
+      case tvKey.KEY_GREEN:
+        if (myDebug) {alert("--- GREEN ---");}
 	if (colorCount<myColors.length) {
            colorCount++;
         } else {
@@ -216,8 +216,8 @@ function remoteControlEvent(e) {
         }
         myStatus.style.color = myColors[colorCount];
         break;
-      case tvKey.KEY_GREEN:
-        if (myDebug) {alert("--- GREEN ---");}
+      case tvKey.KEY_RED:
+        if (myDebug) {alert("--- RED ---");}
         if (myDebug) {alert("--- Switchback entered");}
         shouldRun = false;
         mainFrameBodyContent1.style.visibility = "hidden";
