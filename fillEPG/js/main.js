@@ -335,6 +335,8 @@ function holdIt() {
         waitSeconds = 1;
     }
 
+    setTimeout(updateInfo,2000);
+
     setTimeout(tuneIt,waitSeconds*1000);
 }
 
