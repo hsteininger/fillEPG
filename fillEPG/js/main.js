@@ -130,8 +130,8 @@ function remoteControlEvent(e) {
         if (myDebug) {alert("--- RIGHT ---");}
         waitSeconds ++;
             break;
-      case tvKey.KEY_UP:
-        if (myDebug) {alert("--- UP ---");}
+      case tvKey.KEY_INFO:
+        if (myDebug) {alert("--- INFO ---");}
         if (!myDebug) {
            alert("--- Turn Debug On ---");
            myDebug = true;
@@ -199,8 +199,8 @@ function remoteControlEvent(e) {
            isMuted= false;
         }
         break;
-      case tvKey.KEY_INFO:
-        if (myDebug) {alert("--- INFO ---");}
+      case tvKey.KEY_UP:
+        if (myDebug) {alert("--- UP ---");}
         if (mainFrameBodyContent1.style.visibility == "hidden") {
             mainFrameBodyContent1.style.visibility = "visible";
         } else {
