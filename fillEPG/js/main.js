@@ -125,21 +125,19 @@ function remoteControlEvent(e) {
       case tvKey.KEY_LEFT:
         if (myDebug) {alert("--- LEFT ---");}
         waitSeconds --;
-            break;
+        break;
       case tvKey.KEY_RIGHT:
         if (myDebug) {alert("--- RIGHT ---");}
         waitSeconds ++;
-            break;
-      case tvKey.KEY_INFO:
-        if (myDebug) {alert("--- INFO ---");}
-        if (!myDebug) {
-           alert("--- Turn Debug On ---");
-           myDebug = true;
+        break;
+      case tvKey.KEY_UP:
+        if (myDebug) {alert("--- UP ---");}
+        if (mainFrameBodyContent1.style.visibility == "hidden") {
+            mainFrameBodyContent1.style.visibility = "visible";
         } else {
-           alert("--- Turn Debug Off ---");
-           myDebug = false;
+            mainFrameBodyContent1.style.visibility = "hidden";
         }
-            break;
+        break;
       case tvKey.KEY_DOWN:
         if (myDebug) {alert("--- DOWN ---");}
         if (myPanel.style.visibility == "hidden") {
@@ -147,7 +145,7 @@ function remoteControlEvent(e) {
         } else {
             myPanel.style.visibility = "hidden";
         }
-            break;
+        break;
       case tvKey.KEY_ENTER:
         if (myDebug) {alert("--- ENTER ---");}
         if (shouldRun) {
@@ -156,7 +154,7 @@ function remoteControlEvent(e) {
             shouldRun = true;
             tuneIt();
         }
-            break;
+        break;
       case tvKey.KEY_PANEL_CH_UP:
       case tvKey.KEY_CH_UP:
       case tvKey.KEY_WHEELUP:
@@ -199,12 +197,14 @@ function remoteControlEvent(e) {
            isMuted= false;
         }
         break;
-      case tvKey.KEY_UP:
-        if (myDebug) {alert("--- UP ---");}
-        if (mainFrameBodyContent1.style.visibility == "hidden") {
-            mainFrameBodyContent1.style.visibility = "visible";
+      case tvKey.KEY_INFO:
+        if (myDebug) {alert("--- INFO ---");}
+        if (!myDebug) {
+           alert("--- Turn Debug On ---");
+           myDebug = true;
         } else {
-            mainFrameBodyContent1.style.visibility = "hidden";
+           alert("--- Turn Debug Off ---");
+           myDebug = false;
         }
         break;
       case tvKey.KEY_GREEN:
