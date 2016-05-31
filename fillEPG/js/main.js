@@ -40,6 +40,7 @@ var def_Timeout = 390;
 var myTimeout = def_Timeout;
 
 var isMuted = false;
+var sbRun = false;
 var shouldRun = true;
 var myDebug = false;
 
@@ -210,14 +211,21 @@ function remoteControlEvent(e) {
       case tvKey.KEY_RED:
         if (myDebug) {alert("--- RED ---");}
         if (myDebug) {alert("--- Switchback entered");}
-        shouldRun = false;
-        mainFrameBodyContent1.style.visibility = "hidden";
-        mainFrameBodyContent3.style.visibility = "visible";
-        mainFrameBodyContent3.style.backgroundColor = "red";
-        mainFrameBodyContent3.style.color = "white";
+        if ( sbRun == false ) {
+          shouldRun = false;
+          sbRun = true;
+          mainFrameBodyContent1.style.visibility = "hidden";
+          mainFrameBodyContent3.style.visibility = "visible";
+          mainFrameBodyContent3.style.backgroundColor = "red";
+          mainFrameBodyContent3.style.color = "white";
+          updateInfoInterval = setInterval(updateSwitchBackPanel,1000);
+          setTimeoutHandle = setTimeout(switchBack,myTimeout*1000);
+        } else {
+          clearTimeout(setTimeoutHandle);
+          myTimeout -= 30;
+          setTimeoutHandle = setTimeout(switchBack,myTimeout*1000);
+        }
         widgetAPI.putInnerHTML(mainFrameBodyContent3,myTimeout);
-        updateInfoInterval = setInterval(updateSwitchBackPanel,1000);
-	setTimeoutHandle = setTimeout(switchBack,myTimeout*1000);
         break;
       case tvKey.KEY_YELLOW:
         if (myDebug) {alert("--- YELLOW ---");}
