@@ -17,9 +17,7 @@ var myswitchBackPanel;
 var myCanvas;
 
 //Colors
-var myColors = ['white', 'aqua', 'black', 'blue', 'fuchsia', 'gray', 'green', 'lime', 'maroon', 'navy', 'olive', 'orange', 'purple', 'red', 'silver', 'teal', 'yellow'];
-var colorCount = 0;
-var randColor;
+var randColor = "white";
 
 //Variables
 var curChannel;
@@ -85,8 +83,7 @@ window.onload = function () {
     mainFrameBodyContent3 = document.getElementById("content3");
     myStatus = document.getElementById("status");
     myStatus.style.textAlign = "left";
-    //myStatus.style.color = "white";
-    myStatus.style.color = myColors[colorCount];
+    myStatus.style.color = randColor;
     myPanel = document.getElementById("myP");
     myPanel.style.textAlign = "left";
     myPanel.style.visibility = "hidden";
