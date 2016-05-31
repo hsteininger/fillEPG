@@ -206,12 +206,6 @@ function remoteControlEvent(e) {
         break;
       case tvKey.KEY_GREEN:
         if (myDebug) {alert("--- GREEN ---");}
-	if (colorCount<myColors.length) {
-           colorCount++;
-        } else {
-           colorCount = 0;
-        }
-        myStatus.style.color = myColors[colorCount];
         break;
       case tvKey.KEY_RED:
         if (myDebug) {alert("--- RED ---");}
@@ -332,9 +326,9 @@ function holdIt() {
         waitSeconds = 1;
     }
 
-    setTimeout(updateInfo,2000);
+    setTimeout(updateInfo,1000);
 
-    setTimeout(tuneIt,waitSeconds*1000);
+    setTimeout(tuneIt,(waitSeconds-1)*1000);
 }
 
 //switch the channel up by one,after that jump to holdIt()
