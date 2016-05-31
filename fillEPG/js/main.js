@@ -229,7 +229,12 @@ function remoteControlEvent(e) {
         break;
       case tvKey.KEY_YELLOW:
         if (myDebug) {alert("--- YELLOW ---");}
-
+	if ( sbRun == true ) {
+          clearTimeout(setTimeoutHandle);
+          myTimeout += 30;
+          setTimeoutHandle = setTimeout(switchBack,myTimeout*1000);
+          widgetAPI.putInnerHTML(mainFrameBodyContent3,myTimeout);
+	}
         break;
       case tvKey.KEY_BLUE:
         if (myDebug) {alert("--- BLUE ---");}
