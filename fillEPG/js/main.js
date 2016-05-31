@@ -205,8 +205,8 @@ function remoteControlEvent(e) {
            myDebug = false;
         }
         break;
-      case tvKey.KEY_GREEN:
-        if (myDebug) {alert("--- GREEN ---");}
+      case tvKey.KEY_YELLOW:
+        if (myDebug) {alert("--- YELLOW ---");}
         break;
       case tvKey.KEY_RED:
         if (myDebug) {alert("--- RED ---");}
@@ -227,8 +227,8 @@ function remoteControlEvent(e) {
         }
         widgetAPI.putInnerHTML(mainFrameBodyContent3,myTimeout);
         break;
-      case tvKey.KEY_YELLOW:
-        if (myDebug) {alert("--- YELLOW ---");}
+      case tvKey.KEY_GREEN:
+        if (myDebug) {alert("--- GREEN ---");}
 	if ( sbRun == true ) {
           clearTimeout(setTimeoutHandle);
           myTimeout += 30;
