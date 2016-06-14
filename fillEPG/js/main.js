@@ -246,6 +246,7 @@ function remoteControlEvent(e) {
         if (myDebug) {alert("--- BLUE ---");}
         randColor = randomColors();
         myStatus.style.color = randColor;
+        myPanel.style.color = randColor;
         if (myDebug) {alert("--- randColor: "+ randColor + " ---");}
         break;
 //      case tvKey.KEY_####:
