@@ -39,6 +39,7 @@ var def_Timeout = 390;
 //var def_Timeout = 15;
 var myTimeout = def_Timeout;
 
+var runInfinity = false;
 var isMuted = false;
 var sbRun = false;
 var shouldRun = true;
@@ -207,6 +208,11 @@ function remoteControlEvent(e) {
         break;
       case tvKey.KEY_YELLOW:
         if (myDebug) {alert("--- YELLOW ---");}
+	if (!runInfinity) {
+	   runInfinity = true;
+	} else {
+	   runInfinity = false;
+	}
         break;
       case tvKey.KEY_RED:
         if (myDebug) {alert("--- RED ---");}
@@ -288,11 +294,11 @@ function updateInfo() {
     curChannelName = curChannel.channelName;
     curProgramTitle = curProgram.title;
 
-    widgetAPI.putInnerHTML(myStatus,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + "<br>Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + "<br>Running (OK): " + shouldRun + "<br>Debug (u): " + myDebug + " --- Color: " + randColor);
+    widgetAPI.putInnerHTML(myStatus,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + "<br>Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + "<br>Running (OK): " + shouldRun + "<br>Debug (u): " + myDebug + " --- Color: " + randColor + "<br>Infinity (yellow): " + runInfinity);
 
     //only update panel if visible, until i found something better it is just a clone view of myStatus, maybe output debug later
     //if (myPanel.style.visibility == "visible") {
-       widgetAPI.putInnerHTML(myPanel,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + " --- Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + " --- Running (OK): " + shouldRun + " --- Debug: " + myDebug + " --- Color: " + randColor);
+       widgetAPI.putInnerHTML(myPanel,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + " --- Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + " --- Running (OK): " + shouldRun + " --- Debug: " + myDebug + " --- Color: " + randColor + "<br>Infinity (yellow): " + runInfinity);
     //}
 }
 
@@ -314,7 +320,7 @@ function successCB() {
     }
 
     //test if current channel is the channel we started, if so quit widget
-    if (savedChannelName == curChannelName) {
+    if ( (savedChannelName == curChannelName) && (!runInfinity) ) {
 
         alert("--- Starting Channel Reached ---");
 
