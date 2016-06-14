@@ -294,11 +294,11 @@ function updateInfo() {
     curChannelName = curChannel.channelName;
     curProgramTitle = curProgram.title;
 
-    widgetAPI.putInnerHTML(myStatus,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + "<br>Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + "<br>Running (OK): " + shouldRun + "<br>Debug (u): " + myDebug + " --- Color: " + randColor + "<br>Infinity (yellow): " + runInfinity);
+    widgetAPI.putInnerHTML(myStatus,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + "<br>Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + "<br>Running (OK): " + shouldRun + "<br>Debug (u): " + myDebug + " --- Color (blue): " + randColor + "<br>Infinity (yellow): " + runInfinity);
 
     //only update panel if visible, until i found something better it is just a clone view of myStatus, maybe output debug later
     //if (myPanel.style.visibility == "visible") {
-       widgetAPI.putInnerHTML(myPanel,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + " --- Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + " --- Running (OK): " + shouldRun + " --- Debug: " + myDebug + " --- Color: " + randColor + "<br>Infinity (yellow): " + runInfinity);
+       widgetAPI.putInnerHTML(myPanel,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + " --- Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + " --- Running (OK): " + shouldRun + " --- Debug: " + myDebug + " --- Color (blue): " + randColor + " --- Infinity (yellow): " + runInfinity);
     //}
 }
 
