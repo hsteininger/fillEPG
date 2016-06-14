@@ -291,9 +291,9 @@ function updateInfo() {
     widgetAPI.putInnerHTML(myStatus,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + "<br>Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + "<br>Running (OK): " + shouldRun + "<br>Debug (u): " + myDebug + " --- Color: " + randColor);
 
     //only update panel if visible, until i found something better it is just a clone view of myStatus, maybe output debug later
-    if (myPanel.style.visibility == "visible") {
+    //if (myPanel.style.visibility == "visible") {
        widgetAPI.putInnerHTML(myPanel,"Count: " + (myCounter) + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + " --- Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + " --- Running (OK): " + shouldRun + " --- Debug: " + myDebug + " --- Color: " + randColor);
-    }
+    //}
 }
 
 //update switchback panel
@@ -339,7 +339,7 @@ function holdIt() {
         waitSeconds = 1;
     }
 
-    setTimeout(updateInfo,1000);
+    setTimeout(updateInfo,2000);
 
     setTimeout(tuneIt,(waitSeconds-1)*1000);
 }
