@@ -102,6 +102,24 @@ window.onload = function () {
     //webapis.tv.channel.getChannelList(successListCB, null, webapis.tv.channel.NAVIGATOR_MODE_FAVORITE, 0);
     //webapis.tv.channel.getChannelList(successListCB, errorCB, webapis.tv.channel.NAVIGATOR_MODE_FAVORITE, 0);
 
+    //Unregistering Keys
+    window.onshow = function(){		 // register the onshow event callback
+		widgetAPI.unregistKey(tvKey.KEY_0);
+		widgetAPI.unregistKey(tvKey.KEY_1);
+		widgetAPI.unregistKey(tvKey.KEY_2);
+		widgetAPI.unregistKey(tvKey.KEY_3);
+		widgetAPI.unregistKey(tvKey.KEY_4);
+		widgetAPI.unregistKey(tvKey.KEY_5);
+		widgetAPI.unregistKey(tvKey.KEY_6);
+		widgetAPI.unregistKey(tvKey.KEY_7);
+		widgetAPI.unregistKey(tvKey.KEY_8);
+		widgetAPI.unregistKey(tvKey.KEY_9);
+		widgetAPI.unregistKey(tvKey.KEY_GUIDE);
+		widgetAPI.unregistKey(tvKey.KEY_TOOLS);
+		widgetAPI.unregistKey(tvKey.KEY_MENU);
+		//widgetAPI.unregistKey(TVKEY.KEY_VOL_DOWN);
+    }
+    
     //Widget ready
     widgetAPI.sendReadyEvent();
 
