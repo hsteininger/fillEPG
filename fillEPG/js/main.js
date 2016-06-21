@@ -177,12 +177,14 @@ function remoteControlEvent(e) {
       case tvKey.KEY_WHEELUP:
         if (myDebug) {alert("--- CHANNEL UP ---");}
         webapis.tv.channel.tuneUp(function(){if (myDebug){alert("--- CHANNEL TUNED UP ---");}}, errorCB, webapis.tv.channel.NAVIGATOR_MODE_FAVORITE, 0);
+        setTimeout(updateInfo,2000);
         break;
       case tvKey.KEY_PANEL_CH_DOWN:
       case tvKey.KEY_CH_DOWN:
       case tvKey.KEY_WHEELDOWN:
         if (myDebug) {alert("--- CHANNEL DOWN ---");}
         webapis.tv.channel.tuneDown(function(){if (myDebug){alert("--- CHANNEL TUNED DOWN ---");}}, errorCB, webapis.tv.channel.NAVIGATOR_MODE_FAVORITE, 0);
+        setTimeout(updateInfo,2000);
         break;
       case tvKey.KEY_RETURN:
         //if (myDebug) {alert("--- RETURN ---");}
@@ -366,7 +368,7 @@ function holdIt() {
 
     setTimeout(updateInfo,2000);
 
-    setTimeout(tuneIt,(waitSeconds-1)*1000);
+    setTimeout(tuneIt,waitSeconds*1000);
 }
 
 //switch the channel up by one,after that jump to holdIt()
