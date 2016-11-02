@@ -1,3 +1,6 @@
+** NEEDS SOME REWORK **
+
+
 # fillEPG
 **fillEPG** is an Widget/App for Samsung Smart Hub TVs.
 
