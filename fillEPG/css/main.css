@@ -76,3 +76,15 @@ p {
 	color:#99ffff;
 	text-align:center;
 }
+
+#content4 {
+	position:absolute;
+	z-index:4;
+	left:0px;
+	top:440px;
+	width:980px;
+	height:100px;
+	background-color:black;
+	color:#99ffff;
+	text-align:center;
+}

@@ -11,9 +11,11 @@ var mainFrameBody;
 var mainFrameBodyContent1;
 var mainFrameBodyContent2;
 var mainFrameBodyContent3;
+var mainFrameBodyContent4;
 var myStatus;
 var myPanel;
 var myswitchBackPanel;
+var myblackPanel;
 var myCanvas;
 
 //Colors
@@ -83,12 +85,15 @@ window.onload = function () {
     mainFrameBodyContent1 = document.getElementById("content1");
     mainFrameBodyContent2 = document.getElementById("content2");
     mainFrameBodyContent3 = document.getElementById("content3");
+    mainFrameBodyContent4 = document.getElementById("content4");
     myStatus = document.getElementById("status");
     myStatus.style.textAlign = "left";
     myStatus.style.color = randColor;
     myPanel = document.getElementById("myP");
     myPanel.style.textAlign = "left";
     myPanel.style.visibility = "hidden";
+    myblackPanel = document.getElementById("blackPanel");
+    myblackPanel.style.visibility = "hidden";
     myswitchBackPanel = document.getElementById("myswitchBackPanel");
     myCanvas = document.getElementById("myCanvas");
 
@@ -268,6 +273,11 @@ function remoteControlEvent(e) {
         myStatus.style.color = randColor;
         myPanel.style.color = randColor;
         if (myDebug) {alert("--- randColor: "+ randColor + " ---");}
+        if (myblackPanel.style.visibility == "hidden") {
+            myblackPanel.style.visibility = "visible";
+        } else {
+            myblackPanel.style.visibility = "hidden";
+        }
         break;
 //      case tvKey.KEY_####:
 //        if (myDebug) {alert("--- ####### CHANGE ME ######## ---");}
