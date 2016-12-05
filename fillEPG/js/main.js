@@ -70,7 +70,7 @@ window.onload = function () {
     isMuted = audioControlObject.getMute();
 
     //dime volume
-    if (oldVolume > 5 && !isMuted) {
+    if (oldVolume > 10 && !isMuted) {
        audioControlObject.setVolume(oldVolume-2);
     }
 
