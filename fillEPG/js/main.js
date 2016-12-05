@@ -86,6 +86,7 @@ window.onload = function () {
     mainFrameBodyContent2 = document.getElementById("content2");
     mainFrameBodyContent3 = document.getElementById("content3");
     mainFrameBodyContent4 = document.getElementById("content4");
+    mainFrameBodyContent4.style.visibility = "hidden";
     myStatus = document.getElementById("status");
     myStatus.style.textAlign = "left";
     myStatus.style.color = randColor;
@@ -273,10 +274,10 @@ function remoteControlEvent(e) {
         myStatus.style.color = randColor;
         myPanel.style.color = randColor;
         if (myDebug) {alert("--- randColor: "+ randColor + " ---");}
-        if (myblackPanel.style.visibility == "hidden") {
-            myblackPanel.style.visibility = "visible";
+        if (mainFrameBodyContent4.style.visibility == "hidden") {
+            mainFrameBodyContent4.style.visibility = "visible";
         } else {
-            myblackPanel.style.visibility = "hidden";
+            mainFrameBodyContent4.style.visibility = "hidden";
         }
         break;
 //      case tvKey.KEY_####:
