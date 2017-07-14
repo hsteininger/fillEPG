@@ -33,7 +33,7 @@ var setTimeoutHandle;
 var updateInfoInterval;
 
 var myCounter = 0;
-var waitSeconds = 5;
+var waitSeconds = 8;
 var oldVolume = 0;
 
 //390 Seconds, 420 seems a little bit too much
@@ -83,6 +83,7 @@ window.onload = function () {
     mainFrame = parent.document.getElementById("mainframe");
     mainFrameBody = document.getElementById("mainbody");
     mainFrameBodyContent1 = document.getElementById("content1");
+    mainFrameBodyContent1.style.visibility = "hidden";
     mainFrameBodyContent2 = document.getElementById("content2");
     mainFrameBodyContent3 = document.getElementById("content3");
     mainFrameBodyContent4 = document.getElementById("content4");
@@ -92,7 +93,7 @@ window.onload = function () {
     myStatus.style.color = randColor;
     myPanel = document.getElementById("myP");
     myPanel.style.textAlign = "left";
-    myPanel.style.visibility = "hidden";
+    myPanel.style.visibility = "visible";
     myblackPanel = document.getElementById("blackPanel");
     myblackPanel.style.visibility = "hidden";
     myswitchBackPanel = document.getElementById("myswitchBackPanel");
