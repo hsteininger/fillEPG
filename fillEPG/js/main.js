@@ -356,6 +356,7 @@ function successCB() {
 
     myCounter++;
 
+    updateInfo();
 
     if (myDebug) {
         alert("--- Channel: " + curChannelName + " --- Program: " + curProgramTitle + " --- Description: " + curProgram.detailedDescription);
