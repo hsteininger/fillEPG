@@ -133,7 +133,7 @@ window.onload = function () {
 
     //Update myStatus
     //updateInfoInterval = setInterval(updateInfo,1000);
-    updateInfo();
+    var upInfoInterval = setInterval(updateInfo,1000);
 
     //better start with holdIT() to give some time to the widget
     if (shouldRun) {
@@ -185,14 +185,12 @@ function remoteControlEvent(e) {
       case tvKey.KEY_WHEELUP:
         if (myDebug) {alert("--- CHANNEL UP ---");}
         webapis.tv.channel.tuneUp(function(){if (myDebug){alert("--- CHANNEL TUNED UP ---");}}, errorCB, webapis.tv.channel.NAVIGATOR_MODE_FAVORITE, 0);
-        setTimeout(updateInfo,2000);
         break;
       case tvKey.KEY_PANEL_CH_DOWN:
       case tvKey.KEY_CH_DOWN:
       case tvKey.KEY_WHEELDOWN:
         if (myDebug) {alert("--- CHANNEL DOWN ---");}
         webapis.tv.channel.tuneDown(function(){if (myDebug){alert("--- CHANNEL TUNED DOWN ---");}}, errorCB, webapis.tv.channel.NAVIGATOR_MODE_FAVORITE, 0);
-        setTimeout(updateInfo,2000);
         break;
       case tvKey.KEY_RETURN:
         //if (myDebug) {alert("--- RETURN ---");}
@@ -287,7 +285,6 @@ function remoteControlEvent(e) {
 //
 //        break;
     }
-    updateInfo();
 }
 
 ////channelListSuccessCallBack
@@ -320,6 +317,17 @@ function switchBack() {
     myTimeout=def_Timeout;
 }
 
+//get formated Time
+function getTime() {
+    curDateTime = new Date();
+
+    var hours = ('0'+curDateTime.getHours()).slice(-2);
+    var mins = ('0'+curDateTime.getMinutes()).slice(-2);
+    var sec = ('0'+curDateTime.getSeconds()).slice(-2);
+
+    return hours + ":" + mins + ":" + sec;
+}
+
 //update info pane
 function updateInfo() {
     if (myDebug) {alert("--- Update Info ---");}
@@ -328,11 +336,12 @@ function updateInfo() {
     curChannelName = curChannel.channelName;
     curProgramTitle = curProgram.title;
 
-    widgetAPI.putInnerHTML(myStatus,"Count: " + (myCounter) + " -- Zeit: " + curDateTime.getHours() + ":" + curDateTime.getMinutes() + ":" + curDateTime.getSeconds() + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + "<br>Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + "<br>Running (OK): " + shouldRun + "<br>Debug (info): " + myDebug + " --- Color (blue): " + randColor + "<br>Loop (yellow): " + runInfinity);
+
+    widgetAPI.putInnerHTML(myStatus,"Count: " + (myCounter) + " -- Zeit: " + getTime() + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>"+ curProgram.detailedDescription + "<br>Sec (l/r): " + waitSeconds + "<br>Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + "<br>Running (OK): " + shouldRun + "<br>Debug (info): " + myDebug + " --- Color (blue): " + randColor + "<br>Loop (yellow): " + runInfinity);
 
     //only update panel if visible, until i found something better it is just a clone view of myStatus, maybe output debug later
     //if (myPanel.style.visibility == "visible") {
-    widgetAPI.putInnerHTML(myPanel,"Count: " + (myCounter) + " -- Zeit: " + curDateTime.getHours() + ":" + curDateTime.getMinutes() + ":" + curDateTime.getSeconds() + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + " --- Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + " --- Running (OK): " + shouldRun + " --- Debug: " + myDebug + " --- Color (blue): " + randColor + " --- Loop (yellow): " + runInfinity);
+    widgetAPI.putInnerHTML(myPanel,"Count: " + (myCounter) + " -- Zeit: " + getTime() + "<br>Channel: " + curChannelName + "<br>Program: " + curProgramTitle + "<br>Sec (l/r): " + waitSeconds + " --- Vol/Muted: " + audioControlObject.getVolume() + "/" + isMuted + " --- Running (OK): " + shouldRun + " --- Debug: " + myDebug + " --- Color (blue): " + randColor + " --- Loop (yellow): " + runInfinity);
     //}
 }
 
@@ -347,7 +356,6 @@ function successCB() {
 
     myCounter++;
 
-    updateInfo();
 
     if (myDebug) {
         alert("--- Channel: " + curChannelName + " --- Program: " + curProgramTitle + " --- Description: " + curProgram.detailedDescription);
@@ -379,11 +387,8 @@ function holdIt() {
         waitSeconds = 1;
     }
 
-    setTimeout(updateInfo,2000);
-
     setTimeout(tuneIt,waitSeconds*1000);
 
-    curDateTime = new Date();
 }
 
 //switch the channel up by one,after that jump to holdIt()
